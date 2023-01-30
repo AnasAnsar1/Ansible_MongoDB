@@ -33,7 +33,7 @@
       shell: echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
       become: yes
       when: not mongo_state.stat.exists
-    - name: Install lbssil
+    - name: Install libssl
       apt:
         name: libssl-dev
         state: present
@@ -63,10 +63,10 @@
         name: mongod
         state: restarted
       become: yes
-    - name: Istalling community general collections
+    - name: Installing community general collections
       shell: ansible-galaxy collection install community.general
     - name: Allow all access to port 27017
-      ufw:
+      community.general.ufw:
         rule: allow
         port: '27017'
     - name: Stopping mongodb
