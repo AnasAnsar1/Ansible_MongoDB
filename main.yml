@@ -67,6 +67,7 @@
       ufw:
         rule: allow
         port: '27017'
+      become: yes
     - name: Stopping mongodb
       systemd:
         state: stopped
