@@ -91,7 +91,6 @@
       ansible.posix.synchronize:
         src: /var/lib/mongodb
         dest: /newdata/mongo
-      become: yes
     - name: Rename the old directory to a backup file
       copy:
         src: /var/lib/mongodb
