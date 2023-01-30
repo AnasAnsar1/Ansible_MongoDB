@@ -70,6 +70,7 @@
       become: yes
     - name: Stopping mongodb
       systemd:
+        name: mongod
         state: stopped
       become: yes
     - name: creating directory
