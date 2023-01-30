@@ -2,14 +2,11 @@
 - name: Installing MongoDB
   hosts: all
   tasks:
-    - name: updating cache
-      apt:
-        update_cache: yes
-      become: yes
-    - name: installing utlis
+    - name: Updating cache & installing utlis
       apt:
         name: "{{ item }}"
         state: present
+        update_cache: yes
       become: yes
       loop:
         - wget
@@ -67,6 +64,7 @@
       apt:
         name: ufw
         state: present
+        update_cache: yes
     - name: Allow all access to port 27017
       ufw:
         rule: allow
