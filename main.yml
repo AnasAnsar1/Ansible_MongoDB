@@ -91,6 +91,7 @@
       synchronize:
         src: /var/lib/mongodb
         dest: /newdata/mongo
+      delegate_to: ubuntu1
       become: yes
     - name: Rename the old directory to a backup file
       copy:
