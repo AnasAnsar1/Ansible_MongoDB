@@ -52,11 +52,11 @@
         dest: /etc/mongod.conf
         remote_src: false
       become: yes
-    - name: Restart mongodb
-      systemd:
-        name: mongod
-        state: restarted
-      become: yes
+    - name: check state of /etc/mongod.conf
+      stat:
+        path: /etc/mongod.conf
+      register: mongod.conf
+      notify: Restart mongodb
     - name: Updating cache & Installing ufw
       apt:
         name: ufw
@@ -68,11 +68,7 @@
         rule: allow
         port: '27017'
       become: yes
-    - name: Stopping mongodb
-      systemd:
-        name: mongod
-        state: stopped
-      become: yes
+      notify: Stopping mongodb
     - name: creating directory
       file:
         path: /newdata/mongo
@@ -109,6 +105,18 @@
         src: /newdata/mongo
         path: /var/lib/mongodb
         state: link
+      become: yes
+      notify: Restart MongoDB Service
+  handlers:
+    - name: Restart mongodb
+      systemd:
+        name: mongod
+        state: restarted
+      become: yes
+    - name: Stopping mongodb
+      systemd:
+        name: mongod
+        state: stopped
       become: yes
     - name: Restart MongoDB Service
       systemd:
