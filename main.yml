@@ -86,16 +86,15 @@
         dest: /newdata/mongo
       delegate_to: ubuntu1
       become: yes
-    - name: Rename the old directory to a backup file
-      copy:
-        src: /var/lib/mongodb
-        dest: /var/lib/mongodb.bak
-        remote_src: yes
-      become: yes
-    - name: deleting old directory
-      file:
-        path: /var/lib/mongodb
-        state: absent
+    - name: checking state of /var/lib/mongodb.bak
+      stat:
+        path: /var/lib/mongodb.bak
+      register: mongodb_bak
+    - name: Move foo to bar
+      command: mv /var/lib/mongodb /var/lib/mongodb.bak
+      when: not mongodb_bak.stat.exists
+      notify: Create a symbolic link to the new directory
+  handlers:
     - name: Create a symbolic link to the new directory
       file:
         src: /newdata/mongo
@@ -103,7 +102,6 @@
         state: link
       become: yes
       notify: Restart MongoDB Service
-  handlers:
     - name: Restart mongodb
       systemd:
         name: mongod
