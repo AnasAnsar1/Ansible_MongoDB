@@ -35,14 +35,11 @@
         name: libssl-dev
         state: present
       become: yes
-    - name: updating cache
-      apt:
-        update_cache: yes
-      become: yes
-    - name: Install mongodb-org
+    - name: Update cache & Install mongodb-org
       apt:
         name: mongodb-org
         state: present
+        update_cache: yes
       become: yes
     - name: Enabling mongodb
       systemd:
@@ -60,11 +57,12 @@
         name: mongod
         state: restarted
       become: yes
-    - name: Installing ufw
+    - name: Updating cache & Installing ufw
       apt:
         name: ufw
         state: present
         update_cache: yes
+      become: yes
     - name: Allow all access to port 27017
       ufw:
         rule: allow
