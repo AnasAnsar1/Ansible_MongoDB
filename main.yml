@@ -90,7 +90,7 @@
       stat:
         path: /var/lib/mongodb.bak
       register: mongodb_bak
-    - name: Move foo to bar
+    - name: Rename the old directory to a backup file
       command: mv /var/lib/mongodb /var/lib/mongodb.bak
       when: not mongodb_bak.stat.exists
       notify: Create a symbolic link to the new directory
