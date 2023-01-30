@@ -45,6 +45,7 @@
       systemd:
         name: mongod
         enabled: yes
+      become: yes
     - name: Edit configuration file
       copy:
         src: mongod.conf.j2
