@@ -57,6 +57,8 @@
         name: mongod
         state: restarted
       become: yes
+    - name: Istalling community general collections
+      shell: ansible-galaxy collection install community.general
     - name: Allow all access to port 27017
       ufw:
         rule: allow
