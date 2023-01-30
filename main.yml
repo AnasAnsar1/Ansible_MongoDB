@@ -52,11 +52,6 @@
         dest: /etc/mongod.conf
         remote_src: false
       become: yes
-    - name: check state of /etc/mongod.conf
-      stat:
-        path: /etc/mongod.conf
-      register: mongod.conf
-      notify: Restart mongodb
     - name: Updating cache & Installing ufw
       apt:
         name: ufw
@@ -68,7 +63,9 @@
         rule: allow
         port: '27017'
       become: yes
-      notify: Stopping mongodb
+      notify: 
+        - Restart mongodb
+        - Stopping mongodb
     - name: creating directory
       file:
         path: /newdata/mongo
