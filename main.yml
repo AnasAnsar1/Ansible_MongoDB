@@ -88,9 +88,10 @@
         update_cache: yes
       become: yes
     - name: Copying content from former path to the new directory
-      ansible.posix.synchronize:
+      synchronize:
         src: /var/lib/mongodb
         dest: /newdata/mongo
+      become: yes
     - name: Rename the old directory to a backup file
       copy:
         src: /var/lib/mongodb
