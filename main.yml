@@ -28,7 +28,7 @@
     - name: checking mongodb-org-6.0.list state
       stat:
         path: /etc/apt/sources.list.d/mongodb-org-6.0.list
-      register: mongo-state
+      register: mongo_state
     - name: Configure MongoDB Repo
       shell: echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
       become: yes
