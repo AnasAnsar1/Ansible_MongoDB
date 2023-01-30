@@ -81,6 +81,12 @@
         state: directory
         mode: 0777
       become: yes
+    - name: Install rsync
+      apt:
+        name: rsync
+        state: present
+        update_cache: yes
+      become: yes
     - name: Copying content from former path to the new directory
       ansible.posix.synchronize:
         src: /var/lib/mongodb
