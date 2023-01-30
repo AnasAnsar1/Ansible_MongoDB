@@ -26,11 +26,7 @@
         state: present
       become: yes
     - name: Configure MongoDB Repo
-      apt_repository:
-        repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse"
-        state: present
-    - name: tee mongodb
-      shell: sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+      shell: echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
       become: yes
     - name: Install libssl
       apt:
