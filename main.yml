@@ -58,7 +58,7 @@
         state: restarted
       become: yes
     - name: Allow all access to port 27017
-      community.general.ufw:
+      ufw:
         rule: allow
         port: '27017'
     - name: Stopping mongodb
