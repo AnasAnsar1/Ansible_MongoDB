@@ -92,6 +92,10 @@
         dest: /var/lib/mongodb.bak
         remote_src: yes
       become: yes
+    - name: deleting old directory
+      file:
+        path: /var/lib/mongodb
+        state: absent
     - name: Create a symbolic link to the new directory
       file:
         src: /newdata/mongo
